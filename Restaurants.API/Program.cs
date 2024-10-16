@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Restaurants.API;
 using Restaurants.API.Controllers;
+using Restaurants.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,8 @@ builder.Services.AddScoped<WeatherForecastService>();
 builder.Services.AddSwaggerGen(c => {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 });
-
+builder.Services.AddInfrastructure(builder.Configuration);
+ 
 // ------------------------------------------------------------------------------------Build 
 var app = builder.Build();
 
