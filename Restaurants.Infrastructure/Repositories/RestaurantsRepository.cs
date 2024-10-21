@@ -12,9 +12,17 @@ internal class RestaurantsRepository(RestaurantsDbContext dbContext) : IRestaura
 
         return restaurants;
     }
-
     public async Task<IEnumerable<String>> GetAllContacts() {
         var contacts = await dbContext.Restaurants.Select(col => col.ContactEmail).ToListAsync();
         return contacts;
+    }
+
+    public async Task<Restaurant> GetRestaurantById(int id) {
+        var restaurants = await dbContext.Restaurants.FirstOrDefaultAsync(x => x.Id == id);
+        return restaurants;
+    }
+    public async Task<String> GetRestaurantNameById(int id) {
+        var restaurants = await dbContext.Restaurants.FirstOrDefaultAsync(x => x.Id == id);
+        return restaurants.Name.ToString();
     }
 }

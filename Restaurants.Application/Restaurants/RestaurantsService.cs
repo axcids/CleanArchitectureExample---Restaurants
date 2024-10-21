@@ -8,12 +8,19 @@ internal class RestaurantsService(IRestaurantsRepository restaurantsRepository, 
         var contacts = await restaurantsRepository.GetAllContacts();
         return contacts;
     }
-
-    public async Task<IEnumerable<object>> GetAllRestaurants() {
+    public async Task<IEnumerable<Restaurant>> GetAllRestaurants() {
         var restaurants = await restaurantsRepository.GetAllAsync();
+        return restaurants;
+    }
 
-        var aaa = restaurants.Select(f => new { Name = f.Name, DishName = f.Dishes.Select(cc => new { DishName = cc.Name, DishPrice = cc.Price }).ToList() });
-
-        return aaa;
+    public async Task<Restaurant> GetRestaurantById(int id) {
+        logger.LogInformation($"Getting restaurant with this id: {id}");
+        var restaurants = await restaurantsRepository.GetRestaurantById(id);
+        return restaurants;
+    }
+    public async Task<String> GetRestaurantNameById(int id) {
+        logger.LogInformation($"Getting restaurant name with this id: {id}");
+        var restaurants = await restaurantsRepository.GetRestaurantNameById(id);
+        return restaurants;
     }
 }
