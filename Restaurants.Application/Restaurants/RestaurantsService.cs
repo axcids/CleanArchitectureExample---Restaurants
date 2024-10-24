@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 
@@ -8,15 +9,17 @@ internal class RestaurantsService(IRestaurantsRepository restaurantsRepository, 
         var contacts = await restaurantsRepository.GetAllContacts();
         return contacts;
     }
-    public async Task<IEnumerable<Restaurant>> GetAllRestaurants() {
+    public async Task<IEnumerable<RestaurantDtos?>> GetAllRestaurants() {
         var restaurants = await restaurantsRepository.GetAllAsync();
-        return restaurants;
+        var restaurantsDtos = restaurants.Select(RestaurantDtos.FromEntity);
+        return restaurantsDtos!;
     }
 
-    public async Task<Restaurant> GetRestaurantById(int id) {
+    public async Task<RestaurantDtos?> GetRestaurantById(int id) {
         logger.LogInformation($"Getting restaurant with this id: {id}");
         var restaurants = await restaurantsRepository.GetRestaurantById(id);
-        return restaurants;
+        var restaurantsDtos = RestaurantDtos.FromEntity(restaurants);
+        return restaurantsDtos;
     }
     public async Task<String> GetRestaurantNameById(int id) {
         logger.LogInformation($"Getting restaurant name with this id: {id}");
