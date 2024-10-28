@@ -18,8 +18,12 @@ builder.Services.AddApplication();
 var app = builder.Build();
 
 var scope = app.Services.CreateScope();
-var seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
-await seeder.Seed();
+
+var Restaurantseeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+var CustomerSeeder = scope.ServiceProvider.GetRequiredService<ICustomerSeeders>();
+
+await Restaurantseeder.Seed();
+await CustomerSeeder.Seed();
 
 // ------------------------------------------------------------------------------------ Configure the HTTP request pipeline.
 

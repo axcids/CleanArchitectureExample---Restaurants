@@ -41,5 +41,4 @@ public class RestaurantsController(IRestaurantsService restaurantsService) : Con
 
         }
     }
-
 }
