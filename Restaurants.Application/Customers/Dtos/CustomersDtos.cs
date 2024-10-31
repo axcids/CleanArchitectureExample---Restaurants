@@ -1,6 +1,7 @@
 ﻿using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Restaurants.Application.Customers.Dtos; 
 public class CustomersDtos {
@@ -16,6 +17,7 @@ public class CustomersDtos {
     public string? City { get; set; }
     public string? Street { get; set; }
     public string? PostalCode { get; set; }
+    [JsonIgnore]
     public RestaurantDtos FavoriteRestaurants { get; set; }
     public String FavoriteRestaurant {  get; set; }
 
