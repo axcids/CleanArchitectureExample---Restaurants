@@ -7,6 +7,7 @@ internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> optio
     internal DbSet<Restaurant> Restaurants { get; set; }
     internal DbSet<Dish> Dishes { get; set; }
     internal DbSet<Customer> Customers { get; set; }
+    internal DbSet<Order> Orders{ get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
        base.OnModelCreating(modelBuilder);
 
@@ -19,9 +20,25 @@ internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> optio
         //Combine the two tables of address and customers and add address columns to the customer columns in customers table. 
         modelBuilder.Entity<Customer>().OwnsOne(c => c.Address);
         modelBuilder.Entity<Customer>()
+            .HasIndex(c => c.FavoriteRestaurantId)
+            .IsUnique(false);
+        modelBuilder.Entity<Customer>()
             .HasOne(r => r.Restaurant)
             .WithOne(r => r.Customer)
             .HasForeignKey<Customer>(r => r.FavoriteRestaurantId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        //Order Model and its relations
+        modelBuilder.Entity<Order>()
+            .HasIndex(r => r.RestaurantId)
+            .IsUnique(false);
+        modelBuilder.Entity<Order>()
+            .HasIndex(r => r.CustomerId)
+            .IsUnique(false);
+        modelBuilder.Entity<Order>()
+            .HasOne(r => r.Restaurant)
+            .WithOne(r => r.Order)
+            .HasForeignKey<Order>(r => r.OrderId)
+
     }
 }

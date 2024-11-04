@@ -13,9 +13,18 @@ public class CustomersProfile : Profile{
             .ForMember(d => d.Street, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.Street))
             .ForMember(d => d.PostalCode, opt => opt.MapFrom(src => src.Address == null ? null : src.Address.PostalCode))
             .ForMember(d => d.FavoriteRestaurant, opt => opt.MapFrom(src => src.Restaurant.Name));
-
+        
         CreateMap<Restaurant, RestaurantDtos>();
 
+        CreateMap<AddCustomer, Customer>()
+            .ForMember(d => d.Address, opt => opt.MapFrom(src => new Address {
+                City = src.City,
+                Street = src.Street,
+                PostalCode = src.PostalCode
+            }))
+            .ForMember(d => d.Restaurant, opt => opt.MapFrom(src => src.FavoriteRestaurant))
+            .ForMember(d => d.FavoriteRestaurantId, opt => opt.MapFrom(src => src.FavoriteRestaurant))
+            .ForMember(d => d.Restaurant, opt => opt.MapFrom(src => src.Restaurant));
 
     }
 
