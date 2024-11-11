@@ -16,5 +16,5 @@ public class Customer {
     [Required]
     public int? FavoriteRestaurantId { get; set; }
     public Restaurant Restaurant { get; set; } = new();
-
+    public ICollection<Order> Orders { get; set; }
 }
