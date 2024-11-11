@@ -37,8 +37,14 @@ internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> optio
             .IsUnique(false);
         modelBuilder.Entity<Order>()
             .HasOne(r => r.Restaurant)
-            .WithOne(r => r.Order)
-            .HasForeignKey<Order>(r => r.OrderId)
+            .WithMany(r => r.Orders)
+            .HasForeignKey(o => o.RestaurantId)
+            .IsRequired();
+        modelBuilder.Entity<Order>()
+            .HasOne(c => c.Customer)
+            .WithMany(c => c.Orders)
+            .HasForeignKey(e => e.CustomerId)
+            .IsRequired();
 
     }
 }
