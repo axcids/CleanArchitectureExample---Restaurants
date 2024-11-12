@@ -12,8 +12,8 @@ using Restaurants.Infrastructure.Persistence;
 namespace Restaurants.Infrastructure.Migrations
 {
     [DbContext(typeof(RestaurantsDbContext))]
-    [Migration("20241102091447_addTheOptionOfNullableToRestaurants")]
-    partial class addTheOptionOfNullableToRestaurants
+    [Migration("20241112094809_init2")]
+    partial class init2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,10 +52,14 @@ namespace Restaurants.Infrastructure.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("FavoriteRestaurantId")
-                        .IsUnique();
+                    b.HasIndex("FavoriteRestaurantId");
+
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("Customers");
                 });
@@ -128,9 +132,15 @@ namespace Restaurants.Infrastructure.Migrations
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Customer", b =>
                 {
+                    b.HasOne("Restaurants.Domain.Entities.Restaurant", null)
+                        .WithMany("Customers")
+                        .HasForeignKey("FavoriteRestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Restaurants.Domain.Entities.Restaurant", "Restaurant")
-                        .WithOne("Customer")
-                        .HasForeignKey("Restaurants.Domain.Entities.Customer", "FavoriteRestaurantId")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -199,8 +209,7 @@ namespace Restaurants.Infrastructure.Migrations
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Restaurant", b =>
                 {
-                    b.Navigation("Customer")
-                        .IsRequired();
+                    b.Navigation("Customers");
 
                     b.Navigation("Dishes");
                 });

@@ -21,10 +21,7 @@ public class CustomersProfile : Profile{
                 City = src.City,
                 Street = src.Street,
                 PostalCode = src.PostalCode
-            }))
-            .ForMember(d => d.Restaurant, opt => opt.MapFrom(src => src.FavoriteRestaurant))
-            .ForMember(d => d.FavoriteRestaurantId, opt => opt.MapFrom(src => src.FavoriteRestaurant))
-            .ForMember(d => d.Restaurant, opt => opt.MapFrom(src => src.Restaurant));
+            }));
 
     }
 

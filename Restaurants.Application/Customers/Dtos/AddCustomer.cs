@@ -12,8 +12,5 @@ public class AddCustomer {
     public string? Street { get; set; }
     public string? PostalCode { get; set; }
     public int FavoriteRestaurant { get; set; }
-    [JsonIgnore]
-    public Restaurant? Restaurant { get; set; }
-
 
 }

@@ -6,17 +6,11 @@ using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 
 namespace Restaurants.Application.Customers;
-internal class CustomersService(ICustomerRepository customersRepository, IRestaurantsRepository restaurantsRepository,  ILogger<CustomersService> logger, IMapper mapper) : ICustomersService {
+internal class CustomersService(ICustomerRepository customersRepository,  ILogger<CustomersService> logger, IMapper mapper) : ICustomersService {
     public async Task<int> AddCustomer(AddCustomer addCustomer) {
-        var restaurant = await GetRestaurant(addCustomer.FavoriteRestaurant);
-        addCustomer.Restaurant = restaurant;
         var customer = mapper.Map<Customer>(addCustomer);
         var id = await customersRepository.AddCustomer(customer);
         return id;
-    }
-    public Task<Restaurant> GetRestaurant(int addCustomer) {
-        var restaurant = restaurantsRepository.GetRestaurantById(addCustomer);
-        return restaurant;
     }
     public async Task<CustomersDtos> GetCustomerById(int id) {
         var customer  = await customersRepository.GetCustomerById(id);

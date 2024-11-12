@@ -18,7 +18,7 @@ public class CustomersDtos {
     public string? Street { get; set; }
     public string? PostalCode { get; set; }
     [JsonIgnore]
-    public RestaurantDtos FavoriteRestaurants { get; set; }
+    public Restaurant FavoriteRestaurants { get; set; }
     public String FavoriteRestaurant {  get; set; }
 
     public static CustomersDtos? FromEntity(Customer? c) {

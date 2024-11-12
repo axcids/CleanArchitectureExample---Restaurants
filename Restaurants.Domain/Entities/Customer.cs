@@ -13,8 +13,6 @@ public class Customer {
     public string Email { get; set; }
     public string? PhoneNumber { get; set; }
     public Address? Address { get; set; }
-    [Required]
     public int? FavoriteRestaurantId { get; set; }
-    public Restaurant Restaurant { get; set; } = new();
-    public ICollection<Order> Orders { get; set; }
+    public Restaurant Restaurant { get; set; }
 }
