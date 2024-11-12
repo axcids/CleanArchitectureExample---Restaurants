@@ -12,8 +12,8 @@ using Restaurants.Infrastructure.Persistence;
 namespace Restaurants.Infrastructure.Migrations
 {
     [DbContext(typeof(RestaurantsDbContext))]
-    [Migration("20241112094505_init")]
-    partial class init
+    [Migration("20241112100711_init1")]
+    partial class init1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,10 +37,6 @@ namespace Restaurants.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("FavoriteRestaurantId")
-                        .IsRequired()
-                        .HasColumnType("int");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -56,8 +52,6 @@ namespace Restaurants.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FavoriteRestaurantId");
 
                     b.HasIndex("RestaurantId");
 
@@ -86,7 +80,7 @@ namespace Restaurants.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -132,14 +126,8 @@ namespace Restaurants.Infrastructure.Migrations
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Customer", b =>
                 {
-                    b.HasOne("Restaurants.Domain.Entities.Restaurant", null)
-                        .WithMany("Customers")
-                        .HasForeignKey("FavoriteRestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Restaurants.Domain.Entities.Restaurant", "Restaurant")
-                        .WithMany()
+                        .WithMany("Customers")
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -175,9 +163,7 @@ namespace Restaurants.Infrastructure.Migrations
                 {
                     b.HasOne("Restaurants.Domain.Entities.Restaurant", null)
                         .WithMany("Dishes")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
                 });
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Restaurant", b =>

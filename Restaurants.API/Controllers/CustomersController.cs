@@ -23,7 +23,8 @@ public class CustomersController (ICustomersService customersService): Controlle
     [HttpPost]
     public async Task<IActionResult> AddNewCustomer([FromBody]AddCustomer addCustomer) {
         var id = await customersService.AddCustomer(addCustomer);
-        return CreatedAtAction(nameof(GetCustomerById), new { id }, null);
+        if (id != default(int)) return Ok(id);
+        return null;
     } 
 
 }

@@ -13,6 +13,6 @@ public class Customer {
     public string Email { get; set; }
     public string? PhoneNumber { get; set; }
     public Address? Address { get; set; }
-    public int? FavoriteRestaurantId { get; set; }
+    public int RestaurantId { get; set; }
     public Restaurant Restaurant { get; set; }
 }
