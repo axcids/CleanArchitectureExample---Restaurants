@@ -50,7 +50,7 @@ namespace Restaurants.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RestaurantId");
+                    b.HasIndex(new[] { "RestaurantId" }, "IX_Customers_RestaurantId");
 
                     b.ToTable("Customers");
                 });
@@ -75,16 +75,71 @@ namespace Restaurants.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(6,2)");
 
                     b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RestaurantId");
+                    b.HasIndex(new[] { "RestaurantId" }, "IX_Dishes_RestaurantId");
 
                     b.ToTable("Dishes");
+                });
+
+            modelBuilder.Entity("Restaurants.Domain.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("OrderDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .IsRequired()
+                        .HasColumnType("decimal(6, 2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "CustomerId" }, "IX_Orders_CustomerId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Restaurants.Domain.Entities.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("DishId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex(new[] { "DishId" }, "IX_OrderDetails_DishId");
+
+                    b.HasIndex(new[] { "OrderId" }, "IX_OrderDetails_OrderId");
+
+                    b.ToTable("OrderDetail");
                 });
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Restaurant", b =>
@@ -158,9 +213,39 @@ namespace Restaurants.Infrastructure.Migrations
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Dish", b =>
                 {
-                    b.HasOne("Restaurants.Domain.Entities.Restaurant", null)
+                    b.HasOne("Restaurants.Domain.Entities.Restaurant", "Restaurant")
                         .WithMany("Dishes")
                         .HasForeignKey("RestaurantId");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Restaurants.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("Restaurants.Domain.Entities.Customer", "Customer")
+                        .WithMany("Orders")
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Restaurants.Domain.Entities.OrderDetail", b =>
+                {
+                    b.HasOne("Restaurants.Domain.Entities.Dish", "Dish")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("DishId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Restaurants.Domain.Entities.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dish");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Restaurant", b =>
@@ -188,6 +273,21 @@ namespace Restaurants.Infrastructure.Migrations
                         });
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("Restaurants.Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Restaurants.Domain.Entities.Dish", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("Restaurants.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("Restaurants.Domain.Entities.Restaurant", b =>

@@ -14,5 +14,6 @@ public class Customer {
     public string? PhoneNumber { get; set; }
     public Address? Address { get; set; }
     public int RestaurantId { get; set; }
-    public Restaurant Restaurant { get; set; }
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+    public virtual Restaurant Restaurant { get; set; }
 }
