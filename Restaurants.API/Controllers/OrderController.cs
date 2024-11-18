@@ -11,13 +11,11 @@ public class OrderController(IOrdersService ordersService) : Controller {
         var orders = await ordersService.GetAllOrders();
         return Ok(orders);
     }
-    [HttpGet]
-    public async Task<IActionResult> GetOrderById(int id) {
-        var OrderId = await ordersService.GetOrderById(id);
-        return Ok(OrderId);
-    }
     [HttpPost]
-    public async Task<IActionResult> AddOrder(AddOrder entity) {
-        throw new NotImplementedException();
+    [Route("AddNewOrder")]
+    public async Task<IActionResult> AddOrder([FromBody] AddOrder entity) {
+        var id = await ordersService.AddOrder(entity);
+        if(id != default(int)) return Ok(id);
+        return null;
     }
 }

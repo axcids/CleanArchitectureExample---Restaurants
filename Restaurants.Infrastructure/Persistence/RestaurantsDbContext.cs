@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Restaurants.Domain.Entities;
 using System.Diagnostics;
+using Restaurants.Application.Orders.Dtos;
 
 namespace Restaurants.Infrastructure.Persistence; 
 internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) : DbContext(options) {

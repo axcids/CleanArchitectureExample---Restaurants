@@ -21,6 +21,7 @@ public class CustomersController (ICustomersService customersService): Controlle
         return Ok(customer);
     }
     [HttpPost]
+    [Route("AddNewCustomer")]
     public async Task<IActionResult> AddNewCustomer([FromBody]AddCustomer addCustomer) {
         var id = await customersService.AddCustomer(addCustomer);
         if (id != default(int)) return Ok(id);
