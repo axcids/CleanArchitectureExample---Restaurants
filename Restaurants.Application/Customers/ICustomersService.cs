@@ -8,6 +8,5 @@ namespace Restaurants.Application.Customers {
         Task<CustomersDtos> GetCustomerById(int id);
         Task<int> AddCustomer(AddCustomer addCustomer);
 
-
     }
 }

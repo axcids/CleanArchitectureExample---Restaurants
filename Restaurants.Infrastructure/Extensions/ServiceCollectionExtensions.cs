@@ -17,5 +17,8 @@ public static class ServiceCollectionExtensions {
         services.AddScoped<ICustomerSeeders, CustomerSeeder>();
         services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();
         services.AddScoped<ICustomerRepository, CustomerRepositories>();
+        services.AddScoped<IOrdersRepository, OrderRepository>();
+        services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
+
     }
 }

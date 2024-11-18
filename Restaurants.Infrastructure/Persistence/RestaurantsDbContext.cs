@@ -9,6 +9,7 @@ internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> optio
     internal DbSet<Dish> Dishes { get; set; }
     internal DbSet<Customer> Customers { get; set; }
     internal DbSet<Order> Orders{ get; set; }
+    internal DbSet<OrderDetail> OrderDetails{ get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
        base.OnModelCreating(modelBuilder);
 
