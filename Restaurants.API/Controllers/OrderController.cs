@@ -8,11 +8,10 @@ using Restaurants.Application.Orders.Queries.GetOrderById;
 
 namespace Restaurants.API.Controllers;
 [ApiController]
-[Route("api/orders")]
+[Route("api/orders/")]
 public class OrderController(IMediator mediator) : Controller {
 
     //GET
-
     [HttpGet]
     [Route("GetAllOrderHeaders")]
     public async Task<IActionResult> GetAllOrderHeaders() {

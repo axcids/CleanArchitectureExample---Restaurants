@@ -33,7 +33,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//Swagger
 app.UseSwagger();
-app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"));
-
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestaurantProject APIs V1"));
 app.Run();
