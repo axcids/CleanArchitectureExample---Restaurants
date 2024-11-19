@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions {
         var applicatrionAssembly = typeof(ServiceCollectionExtensions).Assembly;
         services.AddScoped<IRestaurantsService, RestaurantsService>();
         services.AddScoped<ICustomersService, CustomersService>();
-        services.AddScoped<IOrdersService, OrderService>();
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(applicatrionAssembly));
         services.AddAutoMapper(applicatrionAssembly);
         services.AddValidatorsFromAssembly(applicatrionAssembly).AddFluentValidation(); ;
 

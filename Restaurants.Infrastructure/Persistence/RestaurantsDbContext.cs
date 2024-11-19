@@ -65,8 +65,6 @@ internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> optio
             //Foreign Keys
             entity.HasOne(e => e.Dish).WithMany(d => d.OrderDetails).HasForeignKey(b => b.DishId);
             entity.HasOne(e => e.Order).WithMany(d => d.OrderDetails).HasForeignKey(b => b.OrderId);
-
-
         });
     }
 }
