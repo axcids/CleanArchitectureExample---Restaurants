@@ -5,10 +5,11 @@ public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 
     public CreateOrderCommandValidator() {
         RuleFor(x => x.CustomerId)
-            .NotEmpty().WithMessage("Customer ID is required.");
+            .NotEmpty().WithMessage("Customer ID is required.")
+            .GreaterThan(0).WithMessage("Customer ID must be a positive number.");
         RuleFor(x => x.OrderDate)
             .NotEmpty()
-            .GreaterThan(DateTime.Now).WithMessage("Order date must be in the future.")
+            .GreaterThan(DateTime.Now.AddMinutes(-1)).WithMessage("Order date must be in the future.")
             .LessThan(DateTime.Now.AddYears(1)).WithMessage("Event date cannot be more than a year in the future.");
         RuleFor(x => x.OrderStatus)
             .NotEmpty().WithMessage("Order status is required.")

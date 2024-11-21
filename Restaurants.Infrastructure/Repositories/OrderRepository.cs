@@ -2,6 +2,7 @@
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
 using Restaurants.Infrastructure.Persistence;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Restaurants.Infrastructure.Repositories;
 internal class OrderRepository(RestaurantsDbContext dbContext) : IOrdersRepository {
@@ -9,6 +10,11 @@ internal class OrderRepository(RestaurantsDbContext dbContext) : IOrdersReposito
         dbContext.Add(entity);
         await dbContext.SaveChangesAsync();
         return entity.Id;
+    }
+
+    public async Task DeleteOrderById(Order entity) {
+        dbContext.Remove(entity);
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Order>> GetAllOrdersAsync() {
@@ -21,4 +27,8 @@ internal class OrderRepository(RestaurantsDbContext dbContext) : IOrdersReposito
             .FirstOrDefault(o => o.Id == id);
         return orders;
     }
+
+    public async Task SaveChanges()=>
+         await dbContext.SaveChangesAsync();
+    
 }
