@@ -24,9 +24,7 @@ public class OrderController(IMediator mediator) : Controller {
     [HttpGet]
     [Route("GetOrderHeaderById")]
     public async Task<IActionResult> GetOrderById(int id) {
-        if(id != default(int)) {
-            return NotFound();
-        }
+        
         var order = await mediator.Send(new GetOrderByIdQuery() {
             Id = id
         });
@@ -49,6 +47,8 @@ public class OrderController(IMediator mediator) : Controller {
     //Delete
     [HttpDelete]
     [Route("DeleteOrderHeaderById")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteOrderById(int id) {
         var isDeleted = await mediator.Send(new DeleteOrderCommand(id) {
             Id = id
@@ -62,7 +62,10 @@ public class OrderController(IMediator mediator) : Controller {
 
     [HttpPatch]
     [Route("ApproveOrder")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ApproveOrder(int id){
+
         var isApproved = await mediator.Send(new UpdateOrderStatusToApprovedCommand(id) {
             Id = id
         });
@@ -71,6 +74,8 @@ public class OrderController(IMediator mediator) : Controller {
     }
     [HttpPatch]
     [Route("RejectOrder")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> RejectOrder(int id) {
         var isRejected = await mediator.Send(new UpdateOrderStatusToRejectedCommand(id) {
             Id = id
@@ -79,8 +84,10 @@ public class OrderController(IMediator mediator) : Controller {
         return NotFound();
     }
     [HttpPatch]
-    [Route("OrderDelevrid")]
-    public async Task<IActionResult> OrderDelivered(int id) {
+    [Route("DeliverOrder")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult>DeliverOrder(int id) {
         var isDelivered = await mediator.Send(new UpdateOrderStatusToDeliveredCommand(id) {
             Id = id
         });
