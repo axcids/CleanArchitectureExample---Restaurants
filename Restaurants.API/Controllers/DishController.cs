@@ -9,9 +9,8 @@ public class DishController(IMediator mediator) : ControllerBase {
     [HttpPost]
     [Route("AddNewDishToARestaurant")]
     public async Task<IActionResult> CreateDish([FromRoute]int restaurantId, CreateDishCommand command) {
-        await mediator.Send(command){
-            command.RestaurantId = restaurantId;
-        }
+        command.RestaurantId = restaurantId;
+        await mediator.Send(command);
         return Created();
     }
 }
