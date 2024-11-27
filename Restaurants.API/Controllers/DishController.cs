@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Restaurants.Application.Dishes.Commands.CreateDish;
 using Restaurants.Application.Dishes.Dtos;
+using Restaurants.Application.Dishes.Queries.GetAllDishesByRestaurantId;
 
 namespace Restaurants.API.Controllers;
 [ApiController]
@@ -14,11 +15,16 @@ public class DishController(IMediator mediator) : ControllerBase {
         await mediator.Send(command);
         return Created();
     }
+    [HttpGet("{dishId}")]
+    //[Route("GetDishById")]
+    public async Task<ActionResult<IEnumerable<DishDtos>>> GetDishById([FromRoute] int restaurantId, [FromRoute] int dishId) {
+        var dishes = await mediator.Send(new GetDishByIdQuery(restaurantId, dishId));
+        return Ok(dishes);
+    }
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DishDtos>>> GetAllDishesByRestaurant([FromRoute]int restaurantID) {
-        var dishes = await mediator.Send(new GetAllDishesByRestaurantId() {
-            restaurantID = restaurantID
-        });
+    [Route("GetDishesByRestaurantId")]
+    public async Task<ActionResult<IEnumerable<DishDtos>>> GetAllDishesByRestaurant([FromRoute]int restaurantId) {
+        var dishes = await mediator.Send(new GetAllDishesByRestaureantIdQuery(restaurantId));
         return Ok(dishes);
     }
 }
