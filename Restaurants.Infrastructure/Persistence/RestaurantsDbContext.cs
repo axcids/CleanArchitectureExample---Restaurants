@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Restaurants.Domain.Entities;
 using System.Diagnostics;
 using Restaurants.Application.Orders.Dtos;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Restaurants.Infrastructure.Persistence; 
-internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) : DbContext(options) {
+internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) : IdentityDbContext<User>(options) {
     internal DbSet<Restaurant> Restaurants { get; set; }
     internal DbSet<Dish> Dishes { get; set; }
     internal DbSet<Customer> Customers { get; set; }
