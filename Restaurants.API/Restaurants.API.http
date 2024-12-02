@@ -1,7 +1,19 @@
 @host = https://localhost
 @port = 7281
 @RestaurantsAPI_HostAddress = {{host}}:{{port}}
+@token = CfDJ8G4Kg9L865VEqgHNE2oQaGR8z8uEUQloeRJY2QqR7KmpQZ9UVt0H-K6u1nEFYaMNjti8iGkNBXy03ok6V66QvpipGWPIaLWLiJWpAhAGluMz8cOeqnSe2KPvzALguhe7Iw-KJooYAbhZ9_W--Q7IfuB5UbM9vaiTLFEJ7BvpQV_GlLViYHWlFfdS0ltek0u7h6lkcJAFt8s6de81AwIdsBEiOM80A2-NsaZ-sggAxNIbtxRAM2iYoTTiB_wt1i5E6asiUZl2JZMvNfithVK1KpoF3rmdRWCNVxDD0dJM47NX7qJbv9jBaqJ2HieRyVEiHOKJBBsnPJmH-F4unwPl9XNxD-CR_0aV44bQQRaPLLGYL03DY9NWkDCKRmZLBdstK1f_hXrwkJE4QE3Jy-N9I_Q-VA_Ah13RP6zViEWu1TEPzWVwUSh3rZfW6uX2taVtfFboXvTLnOej66x7biOWcD_6IhZudd5ZeHv0VchKFs005tZ0aI7anS3Xmg-zw5O5RT-4WiIedqaqwoGorpSvHDGyTuwmQ-R5giWdB_oHfdJ22v1B_gBKLCycuy5UZIdpOfyTVjbq2zVL3PEaHHzoDEofyoQ_fgCnY1glhN714SgxK4eXuCSkYaN6w5DykD3HsSqXRR17dylSsBmonSC6EmB68PVqfaM2pwbtJExE8ic-ICB0iWotwbreE0r2GDj3kg
 
-GET {{RestaurantsAPI_HostAddress}}/weatherforecast
+POST {{RestaurantsAPI_HostAddress}}/api/identity/login
+Content-Type: application/json
+{
+  "email": "admin@admin.com",
+  "password": "As!121212"
+}
 
 ###
+POST {{RestaurantsAPI_HostAddress}}/api/identity/register
+
+
+### 
+GET {{RestaurantsAPI_HostAddress}}/api/restaurants
+Authorization: Bearer {{token}}
